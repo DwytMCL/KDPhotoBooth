@@ -1,0 +1,12 @@
+# Pose reference sheet
+
+File: public/pose-sheet.png. Generated September 27, 2026 using the built-in Image Generation tool (no API fallback). Fictional adult models; used only in the reference panel and entry examples.
+
+Prompt:
+Create one photographic contact sheet asset for an online couples photo booth pose-reference library. Exactly 4 columns and 2 rows, eight equally sized rectangular photographs, no gaps, no border, no text, no typography. Overall wide landscape 2:1 aspect ratio; each cell square. The same fictional adult East/Southeast Asian couple (man with short dark hair and woman with shoulder length dark hair, both mid-twenties, casual cream/white t-shirts), waist-up vintage photo booth studio pictures, warm natural film tones, muted rose plain backdrop, soft flash, real skin texture. Each square includes both people and a distinct clear pose. Top row left to right: 1 lean heads together and smile sweetly; 2 both hold a peace sign beside face; 3 each makes half of a heart with one hand joining in the center; 4 both look dramatically shocked with hands at cheeks. Bottom row left to right: 5 serious cinematic back-to-back pose looking toward camera; 6 exaggerated goofy faces eyes crossed tongue out playful; 7 face each other and laugh; 8 arms raised in celebratory dance. Keep all poses visible within their own square and do not overlap cell edges. This is a single cohesive contact sheet, not a website screenshot. No captions or watermark.
+
+## Meme pose references
+
+The picker contains 19 curated meme templates with two-person poses. Three-person setups and illustrated or scene-dependent formats that are impractical to copy in this booth were removed. These images stay in the reference panel and are not composited into captured photos or exports. The Woman Yelling at a Cat image was supplied by the user; 18 other template images are from Imgflip's [popular meme API](https://imgflip.com/api) and [current top-100 list](https://imgflip.com/popular-meme-ids). Each card links to its Imgflip template page. Image files are under `public/memes/` and are named by template ID; the chosen titles, two-person prompts, IDs, and file extensions are listed in `src/meme-references.ts`.
+
+Imgflip describes the catalog as community-uploaded templates. Redistribution and public hosting rights have not been independently established; review those rights before publishing the app publicly.

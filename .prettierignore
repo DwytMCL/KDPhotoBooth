@@ -1,0 +1,9 @@
+node_modules
+dist
+work
+public/wasm
+public/models
+public/segment.worker.js
+package-lock.json
+test-results
+playwright-report

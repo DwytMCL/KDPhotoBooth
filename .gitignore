@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+work/
+test-results/
+playwright-report/
+public/models/
+public/wasm/
+public/segment.worker.js

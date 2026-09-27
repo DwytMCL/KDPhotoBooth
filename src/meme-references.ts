@@ -1,0 +1,35 @@
+const template = (id: number, title: string, prompt: string, extension = 'jpg') => ({
+  title,
+  category: 'Meme recreations',
+  prompt,
+  memeImage: `/memes/${id}.${extension}`,
+  memeSource: `https://imgflip.com/memetemplate/${id}`,
+});
+
+export const memeReferences = [
+  {
+    title: 'Woman Yelling at a Cat',
+    category: 'Meme recreations',
+    prompt: 'One of you goes full dramatic disbelief; the other sits calmly with an innocent, unimpressed face.',
+    memeImage: '/memes/woman-yelling-at-cat.png',
+    memeSource: 'https://imgflip.com/memetemplate/187112276/woman-yelling-at-cat',
+  },
+  template(110133729, 'Spider-Man Pointing at Spider-Man', 'Face each other and point. Match the other’s confused, “you are me” expression.'),
+  template(181913649, 'Drake Hotline Bling', 'Use two photos: first, both reject an idea; next, point at each other as the obvious favorite.'),
+  template(87743020, 'Two Buttons', 'One of you is the torn chooser; the other holds up two imaginary buttons. Both stare at the impossible choice.'),
+  template(222403160, 'Bernie: I Am Once Again Asking', 'One clasps both hands and makes an earnest request; the other reacts with a patient, familiar look.'),
+  template(217743513, 'UNO Draw 25 Cards', 'One shows an imaginary card; the other fans out both hands and reacts as if the deck never ends.'),
+  template(322841258, 'Anakin and Padmé', 'Play four beats across the strip: share an idea, answer hopefully, then show growing suspicion.', 'png'),
+  template(135256802, 'Epic Handshake', 'Meet in the middle for a dramatic forearm clasp. Lean in and pose like a legendary alliance.'),
+  template(129242436, 'Change My Mind', 'One sits confidently with arms folded; the other leans in with a playful counterargument.'),
+  template(309868304, 'Trade Offer', 'One presents an imaginary deal with both hands; the other accepts with a solemn negotiator nod.'),
+  template(180190441, 'They’re the Same Picture', 'Make the same pose side by side, point at each other, and share the “wait, we match” realization.'),
+  template(77045868, 'Pawn Stars: Best I Can Do', 'One offers an imaginary treasure; the other appraises it with a thoughtful “best I can do” expression.'),
+  template(134797956, 'American Chopper Argument', 'Trade turns in a mock argument: explain, interrupt, point, then suddenly agree.'),
+  template(110163934, 'I Bet He’s Thinking About Other Women', 'Sit back-to-back: one daydreams with a faraway look while the other catches the wandering gaze.'),
+  template(354700819, 'Two Guys on a Bus', 'Sit side by side. One gazes out happily; the other slumps and looks dramatically unimpressed.'),
+  template(234202281, 'AJ Styles and Undertaker', 'One steps forward with a bold entrance pose while the other looms just behind with a serious stare.'),
+  template(29562797, 'I’m the Captain Now', 'One takes the captain’s stance; the other reacts like the newly appointed first mate.'),
+  template(21735, 'The Rock Driving', 'One takes the imaginary wheel; the other reacts from the passenger seat as the ride gets ridiculous.'),
+  template(5496396, 'Leonardo DiCaprio Cheers', 'Raise imaginary glasses toward the camera and give each other a knowing, mischievous toast.'),
+];
