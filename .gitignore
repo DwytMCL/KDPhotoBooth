@@ -7,3 +7,6 @@ playwright-report/
 public/models/
 public/wasm/
 public/segment.worker.js
+
+.vercel
+.env*

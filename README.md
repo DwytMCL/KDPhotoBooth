@@ -35,9 +35,11 @@ npm start
 
 The server serves dist/ and /socket on port 3001. Use an HTTPS reverse proxy with WebSocket upgrades. Set HOST=0.0.0.0 in a hosted container and APP_ORIGIN to the exact public HTTPS origin. HTTPS is required for cameras outside localhost. Copy .env.example to .env for private local settings; do not commit secrets.
 
+The Vercel deployment uses the `/api/socket` WebSocket Function and Upstash Redis to persist room state and relay events between function instances. The project must have the Upstash `REDIS_URL` integration variable available in Production. For reliable camera connections between different networks, create a Cloudflare Realtime TURN key and a scoped API token, then add `TURN_KEY_ID` and `TURN_API_TOKEN` as Vercel Production environment variables. The token stays server-side; the function generates expiring ICE credentials for each admitted guest. Without TURN credentials, the app falls back to STUN and some networks may fail to connect. Vercel WebSockets are in beta and reconnect automatically when a function reaches its runtime limit.
+
 Configure TURN_URLS and TURN_SECRET using a managed service or coturn with time-limited HMAC credentials. The server mints four-hour room credentials only after admission. TURN_SECRET never reaches the browser. Allow relay UDP and TLS/TCP 443 as supported by the chosen service. Test relay-only connectivity before release. Without TURN, local/direct connections can work, but some long-distance networks will fail.
 
-Deploy one server instance for this version; rooms are in memory and a server restart ends sessions. Horizontal scaling needs a shared room authority or sticky room routing and is deliberately deferred.
+The self-hosted Node server keeps rooms in memory, so deploy one instance and expect a restart to end sessions. Vercel uses Redis-backed room snapshots so separate function instances can serve a shared booth.
 
 ## Architecture
 

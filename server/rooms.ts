@@ -6,7 +6,7 @@ import {
   type RoomState,
   type Seat,
   type ServerEvent,
-} from '../shared/protocol';
+} from '../shared/protocol.js';
 
 export interface Client {
   id: string;
@@ -21,12 +21,43 @@ type PrivateRoom = {
   created: number;
   disconnected: [number | null, number | null];
 };
+type StoredRoom = Omit<PrivateRoom, 'clients' | 'pendingClient'> & {
+  clients: [string | null, string | null];
+  pendingClient: string | null;
+};
 const secret = () => randomBytes(24).toString('base64url');
 const matches = (a: string, b: string) =>
   a.length === b.length && timingSafeEqual(Buffer.from(a), Buffer.from(b));
 export class RoomHub {
   rooms = new Map<string, PrivateRoom>();
   constructor(private now = Date.now) {}
+  snapshot() {
+    return JSON.stringify(
+      [...this.rooms].map(([id, room]) => [
+        id,
+        {
+          ...room,
+          clients: room.clients.map((client) => client?.id ?? null),
+          pendingClient: room.pendingClient?.id ?? null,
+        },
+      ]),
+    );
+  }
+  restore(value: string | null, clientForId: (id: string) => Client) {
+    this.rooms.clear();
+    if (!value) return;
+    const stored = JSON.parse(value) as [string, StoredRoom][];
+    for (const [id, room] of stored) {
+      this.rooms.set(id, {
+        ...room,
+        clients: room.clients.map((clientId) => (clientId ? clientForId(clientId) : null)) as [
+          Client | null,
+          Client | null,
+        ],
+        pendingClient: room.pendingClient ? clientForId(room.pendingClient) : null,
+      });
+    }
+  }
   private error(client: Client, message: string) {
     client.send({ type: 'error', message });
   }
@@ -108,11 +139,15 @@ export class RoomHub {
       if (
         !room ||
         index < 0 ||
-        room.clients[index] ||
         (room.disconnected[index] !== null && this.now() - room.disconnected[index]! > 120000)
       )
         return this.error(client, 'This booth can no longer be rejoined.');
       const seat = index as Seat;
+      if (room.clients[seat] && room.clients[seat]!.id !== client.id)
+        room.clients[seat]!.send({
+          type: 'closed',
+          message: 'This booth was resumed in another tab.',
+        });
       room.clients[seat] = client;
       room.disconnected[seat] = null;
       room.state.members[seat]!.connected = true;

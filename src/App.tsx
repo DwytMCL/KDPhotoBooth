@@ -937,8 +937,8 @@ export default function App() {
             </section>
             {!state.relayConfigured && (
               <p className="connection-footnote">
-                Local preview: a relay service is not configured yet. Some long-distance connections
-                may not connect.
+                A relay service is not configured yet. Your cameras may not connect across some
+                networks.
               </p>
             )}
           </>

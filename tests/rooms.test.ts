@@ -187,6 +187,28 @@ test('signaling never leaks to someone outside the room', () => {
   f.hub.handle(f.stranger, { type: 'signal', description: { type: 'offer', sdp: 'evil' } });
   assert.equal(f.guest.events.length, before);
 });
+test('room state and client membership survive a serverless instance change', () => {
+  const f = fixture();
+  f.join();
+  const remoteEvents = new Map<string, ServerEvent[]>();
+  const restored = new RoomHub();
+  restored.restore(f.hub.snapshot(), (id) => ({
+    id,
+    send: (event) => {
+      const events = remoteEvents.get(id) || [];
+      events.push(structuredClone(event));
+      remoteEvents.set(id, events);
+    },
+  }));
+  restored.handle(f.host, { type: 'scene', scene: { ...defaultScene, effect: 'warm' } });
+  const state = restored.rooms.get(f.room().id)!.state;
+  assert.equal(state.scene.effect, 'warm');
+  assert.equal(state.members[1]?.name, 'D');
+  assert.equal(remoteEvents.get('guest')?.at(-1)?.type, 'state');
+  const afterAnotherChange = new RoomHub();
+  afterAnotherChange.restore(restored.snapshot(), (id) => ({ id, send: () => undefined }));
+  assert.equal(afterAnotherChange.rooms.get(f.room().id)?.state.scene.effect, 'warm');
+});
 test('clock estimates favor low-latency samples', () => {
   const value = clockEstimate([
     { sent: 0, received: 20, server: 1010 },
