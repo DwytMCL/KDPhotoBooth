@@ -1,5 +1,7 @@
 # KD Photo Booth
 
+[![CI](https://github.com/DwytMCL/KDPhotoBooth/actions/workflows/ci.yml/badge.svg)](https://github.com/DwytMCL/KDPhotoBooth/actions/workflows/ci.yml)
+
 A private photo booth for two people in different places. React + TypeScript, a small WebSocket room server, WebRTC, browser-side MediaPipe segmentation, and Canvas exports. No account, database, analytics, cloud photo storage, or AI API key.
 
 ## Run locally
